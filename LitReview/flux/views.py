@@ -1,7 +1,6 @@
 from django.shortcuts import render
-from django.utils import timezone
-from .models import Post
+from .models import Review
 
 def post_list(request):
-    posts = Post.objects.order_by('-created_date')
-    return render(request, 'flux/post_list.html', {'posts': posts})
+    reviews = Review.objects.order_by('-time_created')
+    return render(request, 'flux/reviews_list.html', {'reviews': reviews})

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <header>
+        <h1><a href="/">Flux</a></h1>
+        {% for review in reviews %}
+            <p>{{ review.user }}</p>
+            <p>{{ review.headline }}</p>
+            <p>{{ review.body }}</p>
+            <p>{{ review.time_created }}</p>
+        {% endfor %}
+    </header>
+</body>
+</html>
