@@ -1,0 +1,22 @@
+.header{
+    display: flex;
+justify-content: space-between;
+align-items: center;
+margin-top: -65px;
+margin-bottom: 65px;
+border-bottom: 1px solid #000;
+}
+
+.header_menu_ul{
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.header_menu_li{
+    margin-right: 1em;
+}
+
+.header_title{
+    text-align: center;
+}

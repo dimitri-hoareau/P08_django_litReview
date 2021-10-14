@@ -1,0 +1,41 @@
+main{
+    width: 80%;
+    margin: auto;
+    max-width: 1000px;
+}
+
+.container_button{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+}
+
+.button {
+    width: 200px;
+    padding: 1em;
+    border: solid 1px #000;
+    text-align: center;
+
+}
+.container{
+    border: solid 1px #000;
+    margin-bottom: 1em;
+    padding: 1em;
+}
+
+.sub_container{
+    margin: 1em;
+}
+
+.container_ticket_button{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ticket_button {
+    width: 150px;
+    padding: 1.2em;
+    border: solid 1px #000;
+    text-align: center;
+
+}

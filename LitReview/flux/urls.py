@@ -5,5 +5,7 @@ from . import views # import views so we can use them in urls.
 
 
 urlpatterns = [
-    path('', views.post_list, name='post_list'),
+    path('', views.reviews_list, name='reviews_list'),
+    path('ask_for_ticket', views.ask_for_ticket, name='ask_for_ticket'),
+
 ]
