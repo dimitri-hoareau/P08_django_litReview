@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from .models import Review, Ticket
-from .forms import PostForm
+from .forms import TicketForm
 
 def reviews_list(request):
 
@@ -24,7 +24,7 @@ def reviews_list(request):
 def ask_for_ticket(request):
 
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = TicketForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
@@ -33,6 +33,6 @@ def ask_for_ticket(request):
 
             return redirect('reviews_list')
     else:
-        form = PostForm()
+        form = TicketForm()
 
     return render(request, 'flux/ask_for_ticket.html', {'form': form})
