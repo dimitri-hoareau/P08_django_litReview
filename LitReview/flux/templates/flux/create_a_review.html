@@ -3,7 +3,16 @@
 {% block content %}
     <h2>Créer un ticket</h2>
     <form method="POST" class="post-form">{% csrf_token %}
+        {% if form_ticket %}
+
+        {{ form_ticket.as_p }}
+        {{ form_review.as_p }}
+
+        {% else %}
+
         {{ form.as_p }}
+
+        {% endif %}
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
 {% endblock %}

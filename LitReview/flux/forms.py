@@ -9,8 +9,14 @@ class TicketForm(forms.ModelForm):
         model = Ticket
         fields = ('title', 'description')
 
-class CreateTicketForm(forms.ModelForm):
+class CreateReviewForm(forms.ModelForm):
 
     class Meta:
         model = Review
-        fields = ('ticket', 'headline', 'body', 'rating')
+        fields = ('headline', 'body', 'rating')
+
+class CreateResponseReviewForm(forms.ModelForm):
+
+    class Meta:
+        model = Review
+        fields = ('headline', 'body', 'rating')

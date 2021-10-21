@@ -4,10 +4,10 @@
    <main>
         <div class="container_button">
             <div class="button">
-                <a href="{% url 'ask_for_ticket' %}">Demander une critique</a>
+                <a href="{% url 'make_a_ticket' %}">Demander une critique</a>
             </div>
             <div class="button">
-                <a href="{% url 'create_a_ticket' %}">Créer une critique</a>
+                <a href="{% url 'create_a_review' %}">Créer une critique</a>
             </div>
         </div>
         {% for element in list_of_ticket_and_reviews %}
@@ -25,6 +25,7 @@
                     <p>{{ element.ticket.time_created }}</p>
                 </div>
             {% else %}
+            <script>console.log("{{element.pk}}")</script>
                 <p>{{ element.user }} a demandé une critique</p>
                 <p>{{ element.title }}</p>
                 <p>{{ element.description }}</p>
@@ -32,7 +33,7 @@
                 {% if not element.done %}
                     <div class="container_ticket_button">
                         <div class="ticket_button">
-                            <a href="#">Créer une critique</a>
+                            <a href="{% url 'create_response_review' id=element.id %}">Créer une critique</a>
                         </div>
                     </div>
                 {% endif %}
@@ -41,3 +42,7 @@
     {% endfor %}
     </main>
 {% endblock %}
+
+
+<!-- différence id et pk -->
+<!-- rename ticket = review -->

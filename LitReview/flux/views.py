@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+
 from django.utils import timezone
 from .models import Review, Ticket
-from .forms import CreateTicketForm, TicketForm
+from .forms import CreateReviewForm, TicketForm, CreateResponseReviewForm
 
 def reviews_list(request):
 
@@ -21,7 +22,7 @@ def reviews_list(request):
 
     return render(request, 'flux/reviews_list.html', {"list_of_ticket_and_reviews": ordonnerd_list_of_T_and_R})
 
-def ask_for_ticket(request):
+def make_a_ticket(request):
 
     if request.method == "POST":
         form = TicketForm(request.POST)
@@ -35,20 +36,49 @@ def ask_for_ticket(request):
     else:
         form = TicketForm()
 
-    return render(request, 'flux/ask_for_ticket.html', {'form': form})
+    return render(request, 'flux/make_a_ticket.html', {'form': form})
 
-def create_a_ticket(request):
+def create_a_review(request):
 
     if request.method == "POST":
-        form = CreateTicketForm(request.POST)
+        form = TicketForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
             post.time_created = timezone.now()
             post.save()
 
-            return redirect('reviews_list')
-    else:
-        form = CreateTicketForm()
+            reviews_form = CreateReviewForm(request.POST)
+            reviews_ticket = Ticket.objects.get(id=post.id)
+            post = reviews_form.save(commit=False)
+            post.ticket = reviews_ticket
+            post.user = request.user
+            post.time_created = timezone.now()
+            post.save()
 
-    return render(request, 'flux/create_a_ticket.html', {'form': form})
+            return redirect('reviews_list')
+
+    form_ticket = TicketForm()
+    form_review = CreateReviewForm()
+
+    return render(request, 'flux/create_a_review.html', {'form_ticket' : form_ticket, 'form_review': form_review})
+
+def create_response_review(request, id):
+
+    ticket = get_object_or_404(Ticket, id=id)
+
+    if request.method == "POST":
+        form = CreateResponseReviewForm(request.POST)
+        print(form)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.ticket = ticket
+            post.user = request.user
+            post.time_created = timezone.now()
+            post.save()
+
+            return redirect('reviews_list')
+
+    form = CreateResponseReviewForm()
+
+    return render(request, 'flux/create_a_review.html', {'form': form})
