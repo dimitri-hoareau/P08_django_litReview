@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User
 
 from django.utils import timezone
 from .models import Review, Ticket
@@ -9,6 +10,27 @@ def reviews_list(request):
     list_of_T_and_R = []
     reviews = Review.objects.order_by('-time_created')
     tickets = Ticket.objects.order_by('-time_created')
+
+    for review in reviews:
+        list_of_T_and_R.append(review)
+    for ticket in tickets:
+        for review in reviews:
+            if ticket == review.ticket:
+                ticket.done = True
+        list_of_T_and_R.append(ticket)
+
+    ordonnerd_list_of_T_and_R = sorted(list_of_T_and_R, key=lambda k: k.time_created, reverse=True)
+
+    return render(request, 'flux/reviews_list.html', {"list_of_ticket_and_reviews": ordonnerd_list_of_T_and_R})
+
+
+def posts(request):
+
+    me = User.objects.get(username='dimitri') #récupérer le bon user
+
+    list_of_T_and_R = []
+    reviews = Review.objects.filter(user=me).order_by('-time_created')
+    tickets = Ticket.objects.filter(user=me).order_by('-time_created')
 
     for review in reviews:
         list_of_T_and_R.append(review)
