@@ -7,7 +7,7 @@
                 <a href="{% url 'ask_for_ticket' %}">Demander une critique</a>
             </div>
             <div class="button">
-                <a href="#">Créer une critique</a>
+                <a href="{% url 'create_a_ticket' %}">Créer une critique</a>
             </div>
         </div>
         {% for element in list_of_ticket_and_reviews %}
