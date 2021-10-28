@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from django.utils import timezone
 from .models import Review, Ticket
-from .forms import CreateReviewForm, TicketForm, CreateResponseReviewForm
+from .forms import CreateReviewForm, TicketForm, CreateResponseReviewForm, SubscriptionsForm
 
+@login_required
 def reviews_list(request):
 
     list_of_T_and_R = []
@@ -23,14 +25,12 @@ def reviews_list(request):
 
     return render(request, 'flux/reviews_list.html', {"list_of_ticket_and_reviews": ordonnerd_list_of_T_and_R})
 
-
+@login_required
 def posts(request):
 
-    me = User.objects.get(username='dimitri') #récupérer le bon user
-
     list_of_T_and_R = []
-    reviews = Review.objects.filter(user=me).order_by('-time_created')
-    tickets = Ticket.objects.filter(user=me).order_by('-time_created')
+    reviews = Review.objects.filter(user=request.user).order_by('-time_created')
+    tickets = Ticket.objects.filter(user=request.user).order_by('-time_created')
 
     for review in reviews:
         list_of_T_and_R.append(review)
@@ -44,6 +44,14 @@ def posts(request):
 
     return render(request, 'flux/reviews_list.html', {"list_of_ticket_and_reviews": ordonnerd_list_of_T_and_R})
 
+@login_required
+def subscriptions(request):
+
+    form = SubscriptionsForm()
+
+    return render(request, 'flux/subscriptions.html', {'form': form})
+
+@login_required
 def make_a_ticket(request):
 
     if request.method == "POST":
@@ -60,6 +68,7 @@ def make_a_ticket(request):
 
     return render(request, 'flux/make_a_ticket.html', {'form': form})
 
+@login_required
 def create_a_review(request):
 
     if request.method == "POST":
@@ -85,6 +94,7 @@ def create_a_review(request):
 
     return render(request, 'flux/create_a_review.html', {'form_ticket' : form_ticket, 'form_review': form_review})
 
+@login_required
 def create_response_review(request, id):
 
     ticket = get_object_or_404(Ticket, id=id)

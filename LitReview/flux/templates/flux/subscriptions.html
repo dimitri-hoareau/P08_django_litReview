@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Suivre d'autres utlisateurs</h2>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+
+    <h2> Abonnements</h2>
+    <table>
+        <tbody>
+            <tr>
+                <td>User</td>
+                <td>Désabonner</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Abonnés</h2>
+{% endblock %}

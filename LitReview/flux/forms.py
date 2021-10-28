@@ -20,3 +20,9 @@ class CreateResponseReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ('headline', 'body', 'rating')
+
+class SubscriptionsForm(forms.ModelForm):
+
+    class Meta:
+        model = Review
+        fields = ('headline',)
