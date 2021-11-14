@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import fields
 
-from .models import Ticket, Review
+from .models import Ticket, Review, UserFollows
 
 class TicketForm(forms.ModelForm):
 
@@ -24,5 +24,5 @@ class CreateResponseReviewForm(forms.ModelForm):
 class SubscriptionsForm(forms.ModelForm):
 
     class Meta:
-        model = Review
-        fields = ('headline',)
+        model = UserFollows
+        fields = ('user',)

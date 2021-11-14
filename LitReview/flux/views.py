@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 from django.utils import timezone
-from .models import Review, Ticket
+from .models import Review, Ticket, UserFollows
 from .forms import CreateReviewForm, TicketForm, CreateResponseReviewForm, SubscriptionsForm
 
 @login_required
@@ -47,9 +48,24 @@ def posts(request):
 @login_required
 def subscriptions(request):
 
-    form = SubscriptionsForm()
+    User = get_user_model()
+    list_of_users = User.objects.all
 
-    return render(request, 'flux/subscriptions.html', {'form': form})
+    if request.method == "POST":
+        form = SubscriptionsForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            # post.user = request.user
+            # post.time_created = timezone.now()
+            # post.save()
+            print(post.user)
+
+            return render(request, 'flux/subscriptions.html', {'form': form, "users" : list_of_users})
+    else:
+        form = SubscriptionsForm()
+
+    return render(request, 'flux/subscriptions.html', {'form': form, "users" : list_of_users})
+
 
 @login_required
 def make_a_ticket(request):
