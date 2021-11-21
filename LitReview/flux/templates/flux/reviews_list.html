@@ -25,18 +25,25 @@
                     <p>{{ element.ticket.time_created }}</p>
                 </div>
             {% else %}
-            <script>console.log("{{element.pk}}")</script>
                 <p>{{ element.user }} a demandé une critique</p>
                 <p>{{ element.title }}</p>
                 <p>{{ element.description }}</p>
                 <p>{{ element.time_created }}</p>
+                <div class="container_ticket_button">
                 {% if not element.done %}
-                    <div class="container_ticket_button">
-                        <div class="ticket_button">
-                            <a href="{% url 'create_response_review' id=element.id %}">Créer une critique</a>
-                        </div>
+                    <div class="ticket_button">
+                        <a href="{% url 'create_response_review' id=element.id %}">Créer une critique</a>
                     </div>
                 {% endif %}
+                {% if posts_list %}
+                    <div class="ticket_button">
+                        <a href="#">Modifier</a>
+                    </div>
+                    <div class="ticket_button">
+                        <a href="{% url 'post_remove' id=element.id %}">Supprimer</a>
+                    </div>
+                {% endif %}
+                </div>
             {% endif %}
         </div>
     {% endfor %}
@@ -51,6 +58,7 @@
 
 <!-- next : créer userfollow model pour utiliser le form dans le template -->
 <!-- related name dans le form ? -->
+<!-- repo git oK ? -->
 <!-- diificultés à modifier le select du form -->
 <!-- vire dimitri dans la liste des follower dimitri -->
 <!-- empecher de se suivre / gestion des erreurs si on suit le meme (supprimer dans la la liste)-->

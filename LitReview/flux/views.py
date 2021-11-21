@@ -43,7 +43,7 @@ def posts(request):
 
     ordonnerd_list_of_T_and_R = sorted(list_of_T_and_R, key=lambda k: k.time_created, reverse=True)
 
-    return render(request, 'flux/reviews_list.html', {"list_of_ticket_and_reviews": ordonnerd_list_of_T_and_R})
+    return render(request, 'flux/reviews_list.html', {"list_of_ticket_and_reviews": ordonnerd_list_of_T_and_R, "posts_list":True})
 
 @login_required
 def subscriptions(request):
@@ -147,3 +147,13 @@ def create_response_review(request, id):
     form = CreateResponseReviewForm()
 
     return render(request, 'flux/create_a_review.html', {'form': form})
+
+
+@login_required
+def post_remove(request, id):
+    
+    post = get_object_or_404(Ticket, id=id)
+    print(post)
+    post.delete()
+
+    return redirect('reviews_list')
