@@ -23,14 +23,15 @@
                     <p>{{ element.ticket.description }}</p>
                     <p>{{ element.ticket.user }}</p>
                     <p>{{ element.ticket.time_created }}</p>
+                    <img src="/media/{{ element.ticket.image }}" alt="image of illustration">
                 </div>
             {% else %}
                 <p>{{ element.user }} a demandé une critique</p>
                 <p>{{ element.title }}</p>
-                <p>{{ element.image }}</p>
-                <img scr="{{ element.image }}" alt="image of illustration">
                 <p>{{ element.description }}</p>
                 <p>{{ element.time_created }}</p>
+                <img src="/media/{{ element.image }}" alt="image of illustration">
+
                 <div class="container_ticket_button">
                 {% if not element.done %}
                     <div class="ticket_button">
@@ -61,7 +62,7 @@
 <!-- 
 pré remplir les champs pour l'update OK
 update pour les tickets OK
-insérer image
+insérer image OK
 css
 README
 -->

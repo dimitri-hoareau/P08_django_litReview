@@ -91,10 +91,9 @@ def make_a_ticket(request):
         form = TicketForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            post.uploader = request.user
             post.user = request.user
             post.time_created = timezone.now()
-            # post.save()
+            post.save()
 
             return redirect('reviews_list')
     else:
