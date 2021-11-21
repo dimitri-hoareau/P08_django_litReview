@@ -48,23 +48,40 @@ def posts(request):
 @login_required
 def subscriptions(request):
 
-    User = get_user_model()
-    list_of_users = User.objects.all
+    followed_users = []
+    following_users = []
+
+    user_id = request.user.id
+    followed_users_models = UserFollows.objects.filter(user=user_id)
+    following_users_models = UserFollows.objects.filter(followed_user=user_id)
+    for user in followed_users_models:
+        followed_users.append(user.followed_user)
+        
+
+    for user in following_users_models:
+        following_users.append(user.user)
 
     if request.method == "POST":
         form = SubscriptionsForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            # post.user = request.user
-            # post.time_created = timezone.now()
-            # post.save()
-            print(post.user)
+            post.user = request.user
+            if post.followed_user in followed_users:
+                error_message = "Vous suivez déjà cet utilisateur"
+                return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users, "error":error_message})
+            elif post.followed_user == request.user:
+                error_message = "Vous ne pouvez pas vous suivre vous-même"
+                return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users, "error":error_message})
+            else:
+                print(post.followed_user)
+                print(followed_users_models)
+                post.save()
 
-            return render(request, 'flux/subscriptions.html', {'form': form, "users" : list_of_users})
+                return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users})
     else:
         form = SubscriptionsForm()
 
-    return render(request, 'flux/subscriptions.html', {'form': form, "users" : list_of_users})
+    return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users})
 
 
 @login_required

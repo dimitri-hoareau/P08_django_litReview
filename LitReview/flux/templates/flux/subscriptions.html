@@ -2,6 +2,9 @@
 
 {% block content %}
     <h2>Suivre d'autres utlisateurs</h2>
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Save</button>
@@ -10,15 +13,19 @@
     <h2> Abonnements</h2>
     <table>
         <tbody>
+            {% for user in followed_users %}
             <tr>
-                <td>User</td>
+                <td>{{ user }}</td>
                 <td>Désabonner</td>
             </tr>
+            {% endfor %}
         </tbody>
     </table>
 
     <h2>Abonnés</h2>
     <tr>
-        <td>User</td>
+        {% for user in following_users %}
+        <td>{{ user }}</td>
+        {% endfor %}
     </tr>
 {% endblock %}
