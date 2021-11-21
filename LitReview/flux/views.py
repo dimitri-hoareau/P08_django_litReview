@@ -88,12 +88,13 @@ def subscriptions(request):
 def make_a_ticket(request):
 
     if request.method == "POST":
-        form = TicketForm(request.POST)
+        form = TicketForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
+            post.uploader = request.user
             post.user = request.user
             post.time_created = timezone.now()
-            post.save()
+            # post.save()
 
             return redirect('reviews_list')
     else:
@@ -157,3 +158,23 @@ def post_remove(request, id):
     post.delete()
 
     return redirect('reviews_list')
+
+@login_required
+def post_update(request, id):
+    
+    if request.method == "POST":
+        form = TicketForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            Ticket.objects.filter(id=id).update(title=post.title)
+            Ticket.objects.filter(id=id).update(description=post.description)
+
+        return redirect('reviews_list')
+
+    else:
+        ticket = get_object_or_404(Ticket, id=id)
+        form = TicketForm(initial={'title': ticket.title, 'description': ticket.description},)
+
+    return render(request, 'flux/make_a_ticket.html', {'form': form})
+
+

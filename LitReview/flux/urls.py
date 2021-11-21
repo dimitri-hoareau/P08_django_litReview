@@ -13,5 +13,6 @@ urlpatterns = [
     path('create_response_review/<int:id>/', views.create_response_review, name='create_response_review'),
     path('create_a_review', views.create_a_review, name='create_a_review'),
     path('post/<id>/remove/', views.post_remove, name='post_remove'),
+    path('post/<id>/update/', views.post_update, name='post_update'),
 
 ]
