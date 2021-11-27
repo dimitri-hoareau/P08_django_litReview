@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <h1>{{ request.url }}</h1>
     <h2>Créer un critique</h2>
     <form method="POST" class="post-form">{% csrf_token %}
         {% if form_ticket %}

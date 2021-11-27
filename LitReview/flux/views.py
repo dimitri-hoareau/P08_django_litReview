@@ -87,6 +87,7 @@ def subscriptions(request):
 @login_required
 def make_a_ticket(request):
 
+    print(request.path)
     if request.method == "POST":
         form = TicketForm(request.POST, request.FILES)
         if form.is_valid():
@@ -150,30 +151,44 @@ def create_response_review(request, id):
 
 
 @login_required
-def post_remove(request, id):
+def post_remove(request,type, id):
     
-    post = get_object_or_404(Ticket, id=id)
-    print(post)
+    if type == 'ticket':
+        post = get_object_or_404(Ticket, id=id)
+    else:
+        post = get_object_or_404(Review, id=id)
     post.delete()
 
-    return redirect('reviews_list')
+    return redirect('posts')
 
 @login_required
-def post_update(request, id):
+def post_update(request,type, id):
     
     if request.method == "POST":
-        form = TicketForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            Ticket.objects.filter(id=id).update(title=post.title)
-            Ticket.objects.filter(id=id).update(description=post.description)
+        if type == 'ticket':
+            form = TicketForm(request.POST)
+            if form.is_valid():
+                post = form.save(commit=False)
+                Ticket.objects.filter(id=id).update(title=post.title)
+                Ticket.objects.filter(id=id).update(description=post.description)
+        else:
+            form = CreateResponseReviewForm(request.POST)
+            if form.is_valid():
+                post = form.save(commit=False)
+                Review.objects.filter(id=id).update(headline=post.headline)
+                Review.objects.filter(id=id).update(body=post.body)
+                Review.objects.filter(id=id).update(rating=post.rating)
 
-        return redirect('reviews_list')
+        return redirect('posts')
 
     else:
-        ticket = get_object_or_404(Ticket, id=id)
-        form = TicketForm(initial={'title': ticket.title, 'description': ticket.description},)
+        if type == 'ticket':
+            ticket = get_object_or_404(Ticket, id=id)
+            form = TicketForm(initial={'title': ticket.title, 'description': ticket.description},)
+        else:
+            ticket = get_object_or_404(Review, id=id)
+            form = CreateResponseReviewForm(initial={'headline': ticket.headline, 'body': ticket.body, 'rating': ticket.rating},)
 
-    return render(request, 'flux/make_a_ticket.html', {'form': form})
+    return render(request, 'flux/make_a_ticket.html', {'form': form, 'update': True})
 
 

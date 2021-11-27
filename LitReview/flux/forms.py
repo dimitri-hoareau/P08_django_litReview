@@ -28,6 +28,8 @@ class SubscriptionsForm(forms.ModelForm):
         model = UserFollows
         fields = ('followed_user',)
 
+        #django form custom choice 
+
     # def __init__(self, *args, **kwargs):
     #     self.user = kwargs.pop('user', None)
     #     self.create_form(self.user.id)

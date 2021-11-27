@@ -42,12 +42,21 @@
             {% endif %}
             <div class="container_ticket_button">
                 {% if posts_list %}
-                    <div class="ticket_button">
-                        <a href="{% url 'post_update' id=element.id %}">Modifier</a>
-                    </div>
-                    <div class="ticket_button">
-                        <a href="{% url 'post_remove' id=element.id %}">Supprimer</a>
-                    </div>
+                    {% if element.ticket %}
+                        <div class="ticket_button">
+                            <a href="{% url 'post_update' type='reviews' id=element.id %}">Modifier r</a>
+                        </div>
+                        <div class="ticket_button">
+                            <a href="{% url 'post_remove' type='reviews' id=element.id %}">Supprimer r</a>
+                        </div>
+                    {% else %}
+                        <div class="ticket_button">
+                            <a href="{% url 'post_update' type='ticket' id=element.id %}">Modifier t</a>
+                        </div>
+                        <div class="ticket_button">
+                            <a href="{% url 'post_remove' type='ticket' id=element.id %}">Supprimer t</a>
+                        </div>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
@@ -63,11 +72,14 @@
 pré remplir les champs pour l'update OK
 update pour les tickets OK
 insérer image OK
+moddifier : changer le texte OK
+update revie E>T ticket
+désabonner
 css
 README
 -->
 
-<!-- repo git oK ? -->
+<!-- repo git oK ? : supprimer myenv-->
 <!-- diificultés à modifier le select du form, j'ai du mettre msg erreur a laplace -->
 <!-- validateur de mot de passe https://openclassrooms.com/fr/courses/7192426-allez-plus-loin-avec-le-framework-django/7387277-creez-une-page-d-inscription -->
 <!-- messages françaisregister /login -->
