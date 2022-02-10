@@ -14,5 +14,6 @@ urlpatterns = [
     path('create_a_review', views.create_a_review, name='create_a_review'),
     path('post/<type>/<id>/remove/', views.post_remove, name='post_remove'),
     path('post/<type>/<id>/update/', views.post_update, name='post_update'),
+    path('subscriptions/<id>/remove/', views.follower_remove, name='follower_remove'),
 
 ]

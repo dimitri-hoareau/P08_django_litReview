@@ -1,0 +1,14 @@
+.helptext {
+    display: none;
+}
+
+.signup_post {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    text-align: center;
+}

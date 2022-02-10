@@ -15,17 +15,17 @@
         <tbody>
             {% for user in followed_users %}
             <tr>
-                <td>{{ user }}</td>
-                <td>Désabonner</td>
+                <td>{{ user.followed_user }}</td>
+                <td><a href="{% url 'follower_remove' id=user.id %}">se désabonner</a></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <h2>Abonnés</h2>
-    <tr>
+    <ul>
         {% for user in following_users %}
-        <td>{{ user }}</td>
+        <li>{{ user.user }}</li>
         {% endfor %}
-    </tr>
+    </ul>
 {% endblock %}

@@ -33,9 +33,14 @@ main{
 }
 
 .ticket_button {
-    width: 150px;
+    width: 155px;
     padding: 1.2em;
     border: solid 1px #000;
     text-align: center;
+    margin: 5px;
 
+}
+
+.image_list {
+    width: 200px;
 }

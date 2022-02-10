@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
+<link rel="stylesheet" href="{% static 'css/make_ticket.css' %}">
+
     {% if update %}
-    <h2>Modifier un ticket</h2>
+    <h2 class="title">Modifier un ticket</h2>
     {% else %}
-    <h2>Demander un ticket</h2>
+    <h2 class="title">Demander un ticket</h2>
     {% endif %}
-    <form method="POST" enctype="multipart/form-data" class="post-form">{% csrf_token %}
+    <form class="ticket_form" method="POST" enctype="multipart/form-data" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Save</button>
     </form>

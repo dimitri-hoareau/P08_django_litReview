@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    <h1>{{ request.url }}</h1>
+
+<link rel="stylesheet" href="{% static 'css/make_ticket.css' %}">
+<script src="{% static 'js/create_ticket.js' %}"></script>   
+<!-- <link rel="stylesheet" href="{% static 'js/create_ticket.js' %}"> -->
+
+    <!-- <h1>{{ request.url }}</h1> -->
     <h2>Créer un critique</h2>
-    <form method="POST" class="post-form">{% csrf_token %}
+    <form class="ticket_form" method="POST" class="post-form">{% csrf_token %}
         {% if form_ticket %}
 
         {{ form_ticket.as_p }}

@@ -45,44 +45,80 @@ def posts(request):
 
     return render(request, 'flux/reviews_list.html', {"list_of_ticket_and_reviews": ordonnerd_list_of_T_and_R, "posts_list":True})
 
+# @login_required
+# def subscriptions(request):
+
+#     followed_users = []
+#     following_users = []
+
+#     user_id = request.user.id
+#     followed_users_models = UserFollows.objects.filter(user=user_id)
+#     following_users_models = UserFollows.objects.filter(followed_user=user_id)
+#     for user in followed_users_models:
+#         followed_users.append(user.followed_user)
+        
+
+#     for user in following_users_models:
+#         following_users.append(user.user)
+
+#     if request.method == "POST":
+#         form = SubscriptionsForm(request.POST)
+#         if form.is_valid():
+#             post = form.save(commit=False)
+#             post.user = request.user
+#             if post.followed_user in followed_users:
+#                 error_message = "Vous suivez déjà cet utilisateur"
+#                 return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users, "error":error_message})
+#             elif post.followed_user == request.user:
+#                 error_message = "Vous ne pouvez pas vous suivre vous-même"
+#                 return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users, "error":error_message})
+#             else:
+#                 print(post.followed_user)
+#                 print(followed_users_models)
+#                 post.save()
+
+#                 return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users})
+#     else:
+#         form = SubscriptionsForm()
+
+#     return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users})
+
 @login_required
 def subscriptions(request):
 
     followed_users = []
+    str_followed_users = []
     following_users = []
 
     user_id = request.user.id
     followed_users_models = UserFollows.objects.filter(user=user_id)
     following_users_models = UserFollows.objects.filter(followed_user=user_id)
     for user in followed_users_models:
-        followed_users.append(user.followed_user)
+        followed_users.append(user)
+        str_followed_users.append(user.followed_user)
         
-
     for user in following_users_models:
-        following_users.append(user.user)
+        following_users.append(user)
 
     if request.method == "POST":
         form = SubscriptionsForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
-            if post.followed_user in followed_users:
+
+            if post.followed_user in str_followed_users:
                 error_message = "Vous suivez déjà cet utilisateur"
                 return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users, "error":error_message})
             elif post.followed_user == request.user:
                 error_message = "Vous ne pouvez pas vous suivre vous-même"
                 return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users, "error":error_message})
             else:
-                print(post.followed_user)
-                print(followed_users_models)
                 post.save()
-
-                return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users})
+                return redirect('subscriptions')
     else:
         form = SubscriptionsForm()
 
     return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users})
-
 
 @login_required
 def make_a_ticket(request):
@@ -169,12 +205,24 @@ def post_update(request,type, id):
             form = TicketForm(request.POST)
             if form.is_valid():
                 post = form.save(commit=False)
-                Ticket.objects.filter(id=id).update(title=post.title)
-                Ticket.objects.filter(id=id).update(description=post.description)
+
+                #enleber comit false et ça enregistre directement !
+                # Ticket.objects.filter(id=id).update(title=post.title)
+                # Ticket.objects.filter(id=id).update(description=post.description)
         else:
             form = CreateResponseReviewForm(request.POST)
             if form.is_valid():
                 post = form.save(commit=False)
+
+                # obj = Ticket.objects.get(pk=1)
+
+                # obj.title = "Nouveau titre"
+
+                # obj.description= "New desc"
+
+                # obj.save()
+                # quand on recherche un objet, get au lieu de filter !
+
                 Review.objects.filter(id=id).update(headline=post.headline)
                 Review.objects.filter(id=id).update(body=post.body)
                 Review.objects.filter(id=id).update(rating=post.rating)
@@ -191,4 +239,11 @@ def post_update(request,type, id):
 
     return render(request, 'flux/make_a_ticket.html', {'form': form, 'update': True})
 
+@login_required
+def follower_remove(reques, id):
+
+    post = get_object_or_404(UserFollows, id=id)
+    post.delete()
+
+    return redirect('subscriptions')
 

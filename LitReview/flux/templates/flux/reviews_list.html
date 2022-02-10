@@ -23,14 +23,14 @@
                     <p>{{ element.ticket.description }}</p>
                     <p>{{ element.ticket.user }}</p>
                     <p>{{ element.ticket.time_created }}</p>
-                    <img src="/media/{{ element.ticket.image }}" alt="image of illustration">
+                    <img class="image_list" src="/media/{{ element.ticket.image }}" alt="image of illustration">
                 </div>
             {% else %}
                 <p>{{ element.user }} a demandé une critique</p>
                 <p>{{ element.title }}</p>
                 <p>{{ element.description }}</p>
                 <p>{{ element.time_created }}</p>
-                <img src="/media/{{ element.image }}" alt="image of illustration">
+                <img class="image_list" src="/media/{{ element.image }}" alt="image of illustration">
 
                 <div class="container_ticket_button">
                 {% if not element.done %}
@@ -44,17 +44,17 @@
                 {% if posts_list %}
                     {% if element.ticket %}
                         <div class="ticket_button">
-                            <a href="{% url 'post_update' type='reviews' id=element.id %}">Modifier r</a>
+                            <a href="{% url 'post_update' type='reviews' id=element.id %}">Modifier</a>
                         </div>
                         <div class="ticket_button">
-                            <a href="{% url 'post_remove' type='reviews' id=element.id %}">Supprimer r</a>
+                            <a href="{% url 'post_remove' type='reviews' id=element.id %}">Supprimer</a>
                         </div>
                     {% else %}
                         <div class="ticket_button">
-                            <a href="{% url 'post_update' type='ticket' id=element.id %}">Modifier t</a>
+                            <a href="{% url 'post_update' type='ticket' id=element.id %}">Modifier</a>
                         </div>
                         <div class="ticket_button">
-                            <a href="{% url 'post_remove' type='ticket' id=element.id %}">Supprimer t</a>
+                            <a href="{% url 'post_remove' type='ticket' id=element.id %}">Supprimer</a>
                         </div>
                     {% endif %}
                 {% endif %}
@@ -73,10 +73,15 @@ pré remplir les champs pour l'update OK
 update pour les tickets OK
 insérer image OK
 moddifier : changer le texte OK
-update revie E>T ticket
-désabonner
+update revie E>T ticket OK
+désabonner OK
 css
 README
+uodate revoir
+
+PUT / DELETE ? c'est en form 
+DECALAGE REUNION  12h30 jeudi   15h30 chez moi
+Pojet 8 ?
 -->
 
 <!-- repo git oK ? : supprimer myenv-->
