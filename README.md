@@ -15,18 +15,19 @@ Django 3.2.7
 
 To start this project, you need to :
 - clone the repo from this page.
-- lunch the virtualenvironment
+- create the virtualenvironment  
+ ```
+source env/bin/activate  
+```
+- lanch the virtualenvironment  
+ ```
+python -m venv env  
+```
 - install all the package mentionned in requierement.txt  :
  ```
 pip install -r requirements.txt
 ```
-Then, you have to use postman or the curl command in your terminal  
-
-* [Postman](https://www.postman.com/)
-
-Here is the url for the postman documentation of this API :  
-
-...
+You have to create a account to be allowed to access to the platform.
 
 ## Contributing
 
