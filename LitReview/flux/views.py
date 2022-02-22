@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import get_user_model
-
 from django.utils import timezone
 from .models import Review, Ticket, UserFollows
 from .forms import CreateReviewForm, TicketForm, CreateResponseReviewForm, SubscriptionsForm
+
 
 @login_required
 def reviews_list(request):
@@ -14,11 +13,9 @@ def reviews_list(request):
 
     for user in followed_users_models:
         str_followed_users.append(str(user.followed_user))
-        
     list_of_T_and_R = []
     reviews = Review.objects.order_by('-time_created')
     tickets = Ticket.objects.order_by('-time_created')
-
 
     for review in reviews:
         if str(review.user) in str_followed_users or str(review.user) == str(request.user):
@@ -33,6 +30,7 @@ def reviews_list(request):
     ordonnerd_list_of_T_and_R = sorted(list_of_T_and_R, key=lambda k: k.time_created, reverse=True)
 
     return render(request, 'flux/reviews_list.html', {"list_of_ticket_and_reviews": ordonnerd_list_of_T_and_R})
+
 
 @login_required
 def posts(request):
@@ -51,7 +49,8 @@ def posts(request):
 
     ordonnerd_list_of_T_and_R = sorted(list_of_T_and_R, key=lambda k: k.time_created, reverse=True)
 
-    return render(request, 'flux/reviews_list.html', {"list_of_ticket_and_reviews": ordonnerd_list_of_T_and_R, "posts_list":True})
+    return render(request, 'flux/reviews_list.html', {"list_of_ticket_and_reviews": ordonnerd_list_of_T_and_R, "posts_list": True})
+
 
 @login_required
 def subscriptions(request):
@@ -66,7 +65,6 @@ def subscriptions(request):
     for user in followed_users_models:
         followed_users.append(user)
         str_followed_users.append(user.followed_user)
-        
     for user in following_users_models:
         following_users.append(user)
 
@@ -78,17 +76,18 @@ def subscriptions(request):
 
             if post.followed_user in str_followed_users:
                 error_message = "Vous suivez déjà cet utilisateur"
-                return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users, "error":error_message})
+                return render(request, 'flux/subscriptions.html', {'form': form, "followed_users": followed_users, "following_users": following_users, "error": error_message})
             elif post.followed_user == request.user:
                 error_message = "Vous ne pouvez pas vous suivre vous-même"
-                return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users, "error":error_message})
+                return render(request, 'flux/subscriptions.html', {'form': form, "followed_users": followed_users, "following_users": following_users, "error": error_message})
             else:
                 post.save()
                 return redirect('subscriptions')
     else:
         form = SubscriptionsForm()
 
-    return render(request, 'flux/subscriptions.html', {'form': form, "followed_users" : followed_users,"following_users": following_users})
+    return render(request, 'flux/subscriptions.html', {'form': form, "followed_users": followed_users, "following_users": following_users})
+
 
 @login_required
 def make_a_ticket(request):
@@ -107,6 +106,7 @@ def make_a_ticket(request):
         form = TicketForm()
 
     return render(request, 'flux/make_a_ticket.html', {'form': form})
+
 
 @login_required
 def create_a_review(request):
@@ -132,7 +132,8 @@ def create_a_review(request):
     form_ticket = TicketForm()
     form_review = CreateReviewForm()
 
-    return render(request, 'flux/create_a_review.html', {'form_ticket' : form_ticket, 'form_review': form_review})
+    return render(request, 'flux/create_a_review.html', {'form_ticket': form_ticket, 'form_review': form_review})
+
 
 @login_required
 def create_response_review(request, id):
@@ -157,8 +158,8 @@ def create_response_review(request, id):
 
 
 @login_required
-def post_remove(request,type, id):
-    
+def post_remove(request, type, id):
+
     if type == 'ticket':
         post = get_object_or_404(Ticket, id=id)
     else:
@@ -167,9 +168,10 @@ def post_remove(request,type, id):
 
     return redirect('posts')
 
+
 @login_required
-def post_update(request,type, id):
-    
+def post_update(request, type, id):
+
     if request.method == "POST":
         if type == 'ticket':
             form = TicketForm(request.POST)
@@ -199,6 +201,7 @@ def post_update(request,type, id):
 
     return render(request, 'flux/make_a_ticket.html', {'form': form, 'update': True})
 
+
 @login_required
 def follower_remove(reques, id):
 
@@ -206,4 +209,3 @@ def follower_remove(reques, id):
     post.delete()
 
     return redirect('subscriptions')
-

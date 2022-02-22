@@ -18,8 +18,6 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from flux import views
-from authentication import views
 
 urlpatterns = [
     path('flux/', include('flux.urls')),

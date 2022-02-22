@@ -1,8 +1,5 @@
 from django.urls import path
-from django.conf.urls import url
-
-from . import views # import views so we can use them in urls.
-
+from . import views
 
 urlpatterns = [
     path('', views.reviews_list, name='reviews_list'),
@@ -15,5 +12,4 @@ urlpatterns = [
     path('post/<type>/<id>/remove/', views.post_remove, name='post_remove'),
     path('post/<type>/<id>/update/', views.post_update, name='post_update'),
     path('subscriptions/<id>/remove/', views.follower_remove, name='follower_remove'),
-
 ]

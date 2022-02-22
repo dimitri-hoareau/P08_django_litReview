@@ -3,6 +3,7 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
+
 class Ticket(models.Model):
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=2048, blank=True)
@@ -31,17 +32,10 @@ class UserFollows(models.Model):
         # ensures we don't get multiple UserFollows instances
         # for unique user-user_followed pairs
         unique_together = ('user', 'followed_user', )
-        
+
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     followed_user = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL, 
-        related_name="followed_by", 
+        to=settings.AUTH_USER_MODEL,
+        related_name="followed_by",
         on_delete=models.CASCADE)
-
-
-    #                     userfollow
-    #    dimitri     julie  
-    #    dimitri     eliott
-
-# attention on ne pas se suivre soi meme : userfollow =/= user

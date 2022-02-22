@@ -1,13 +1,14 @@
-from django.contrib.auth import login, authenticate, logout  # import des fonctions login et authenticate
+from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
-from django.views.generic import View
 from django.conf import settings
 
 from . import forms
 
+
 def logout_user(request):
     logout(request)
     return redirect("login")
+
 
 def signup_page(request):
     form = forms.SignupForm()
