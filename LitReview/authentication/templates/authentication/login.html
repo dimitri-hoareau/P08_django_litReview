@@ -4,11 +4,11 @@
 
 <link rel="stylesheet" href="{% static 'css/login.css' %}">
 
-    <!-- <p>{{ message }}</p> -->
     <form class="login_post" method="post">
         {{ form.as_p }}
         {% csrf_token %}
         <button type="submit" >Se connecter</button>
     </form>
-    <p class="signup_text">Pas encore membre ? <a href="{% url 'signup' %}">Inscrivez-vous maintenant !</a></p>
+    <p class="signup_text">Pas encore membre ?</p>
+   <p class="signup_text"><a  href="{% url 'signup' %}">Inscrivez-vous maintenant !</a></p> 
 {% endblock content %}

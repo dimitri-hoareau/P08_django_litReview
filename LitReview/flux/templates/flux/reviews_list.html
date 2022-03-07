@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
-   <main>
+
+<link rel="stylesheet" href="{% static 'css/flux.css' %}">
+   <section>
+       <article>
         <div class="container_button">
             <div class="button">
                 <a href="{% url 'make_a_ticket' %}">Demander une critique</a>
@@ -11,30 +16,34 @@
             </div>
         </div>
         {% for element in list_of_ticket_and_reviews %}
-        <div class="container">
+        {% if element.ticket %}
+        <div class="container container_ticket">
+        {% else %}
+        <div class="container container_review">
+        {% endif %}
             {% if element.ticket %}
-                <p>{{ element.user }} a publié une critique</p>
-                <p>{{ element.headline }}</p>
-                <p>{{ element.rating }}</p>
+                <p class="flux_title ticket_title">{{ element.user }} a publié une critique</p>
+                <p class="flux_book_title">{{ element.headline }}</p>
+                <p>{{ element.rating }} / 5</p>
                 <p>{{ element.body }}</p>
-                <p>{{ element.time_created }}</p>
-                <div class="container sub_container">
-                    <p>{{ element.ticket.title }}</p>
+                <p class="flux_book_date">{{ element.time_created }}</p>
+                <div class="container sub_container container_review">
+                    <p class="flux_book_title">{{ element.ticket.title }}</p>
                     <p>{{ element.ticket.description }}</p>
                     <p>{{ element.ticket.user }}</p>
-                    <p>{{ element.ticket.time_created }}</p>
+                    <p class="flux_book_date">{{ element.ticket.time_created }}</p>
                     <img class="image_list" src="/media/{{ element.ticket.image }}" alt="image of illustration">
                 </div>
             {% else %}
-                <p>{{ element.user }} a demandé une critique</p>
-                <p>{{ element.title }}</p>
+                <p class="flux_title review_title">{{ element.user }} a demandé une critique</p>
+                <p class="flux_book_title">{{ element.title }}</p>
                 <p>{{ element.description }}</p>
-                <p>{{ element.time_created }}</p>
+                <p class="flux_book_date">{{ element.time_created }}</p>
                 <img class="image_list" src="/media/{{ element.image }}" alt="image of illustration">
 
                 <div class="container_ticket_button">
                 {% if not element.done %}
-                    <div class="ticket_button">
+                    <div class="ticket_button button_create">
                         <a href="{% url 'create_response_review' id=element.id %}">Créer une critique</a>
                     </div>
                 {% endif %}
@@ -43,17 +52,17 @@
             <div class="container_ticket_button">
                 {% if posts_list %}
                     {% if element.ticket %}
-                        <div class="ticket_button">
+                        <div class="ticket_button button_update">
                             <a href="{% url 'post_update' type='reviews' id=element.id %}">Modifier</a>
                         </div>
-                        <div class="ticket_button">
+                        <div class="ticket_button button_delete">
                             <a href="{% url 'post_remove' type='reviews' id=element.id %}">Supprimer</a>
                         </div>
                     {% else %}
-                        <div class="ticket_button">
+                        <div class="ticket_button button_update">
                             <a href="{% url 'post_update' type='ticket' id=element.id %}">Modifier</a>
                         </div>
-                        <div class="ticket_button">
+                        <div class="ticket_button button_delete">
                             <a href="{% url 'post_remove' type='ticket' id=element.id %}">Supprimer</a>
                         </div>
                     {% endif %}
@@ -61,30 +70,10 @@
             </div>
         </div>
     {% endfor %}
-    </main>
+</article>
+    </section>
 {% endblock %}
 
 
 
 
-
-<!-- 
-pré remplir les champs pour l'update OK
-update pour les tickets OK
-insérer image OK
-moddifier : changer le texte OK
-update revie E>T ticket OK
-désabonner OK
-css
-README
-uodate revoir
-
-PUT / DELETE ? c'est en form 
-DECALAGE REUNION  12h30 jeudi   15h30 chez moi
-Pojet 8 ?
--->
-
-<!-- repo git oK ? : supprimer myenv-->
-<!-- diificultés à modifier le select du form, j'ai du mettre msg erreur a laplace -->
-<!-- validateur de mot de passe https://openclassrooms.com/fr/courses/7192426-allez-plus-loin-avec-le-framework-django/7387277-creez-une-page-d-inscription -->
-<!-- messages françaisregister /login -->

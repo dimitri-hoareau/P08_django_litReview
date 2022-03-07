@@ -1,7 +1,18 @@
 main{
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+section{
+    background-color: #B9D6F2;
+
+}
+
+article{
     width: 80%;
     margin: auto;
     max-width: 1000px;
+
 }
 
 .container_button{
@@ -11,16 +22,30 @@ main{
 }
 
 .button {
-    width: 200px;
-    padding: 1em;
-    border: solid 1px #000;
-    text-align: center;
 
+    padding: 1em;
+    text-align: center;
+    background: #003559;
+    border: none;
+    padding: 12px;
+    width: 200px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+.button a {
+    text-decoration: none;
+    color: #fff;
 }
 .container{
     border: solid 1px #000;
     margin-bottom: 1em;
     padding: 1em;
+    border-radius: 5px;
+    box-shadow: 1px 1px 12px #555;
 }
 
 .sub_container{
@@ -35,12 +60,54 @@ main{
 .ticket_button {
     width: 155px;
     padding: 1.2em;
-    border: solid 1px #000;
+    border-radius: 5px;
+    box-shadow: 1px 1px 12px #555;
     text-align: center;
     margin: 5px;
+}
 
+.button_delete {
+    background-color: red;
+}
+.button_create {
+    background: #003559;
+}
+
+.button_update {
+    background-color: green;
+}
+.ticket_button a {
+    color: #fff;
+    text-decoration: none;
 }
 
 .image_list {
     width: 200px;
+}
+
+.container_review {
+    background-color: #006DAA;
+}
+
+.flux_title {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+
+  .ticket_title {
+      color: #003559;
+  }
+
+  .review_title {
+    color: #fff;
+}
+
+.flux_book_title{
+font-weight: bold;
+}
+
+
+.flux_book_date{
+font-style: italic;
 }

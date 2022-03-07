@@ -1,10 +1,15 @@
+* {
+font-family: 'Roboto', sans-serif;
+}
+
 .header{
     display: flex;
 justify-content: space-between;
 align-items: center;
-margin-top: -65px;
-margin-bottom: 65px;
+
 border-bottom: 1px solid #000;
+background-color: #003559;
+color: #fff;
 }
 
 .header_menu_ul{
@@ -19,4 +24,30 @@ border-bottom: 1px solid #000;
 
 .header_title{
     text-align: center;
+    color: #fff;
+}
+
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+}
+
+header img {
+    margin: 0 313px 0 30px;
+    width: 40px;
+  }
+
+main {
+    background-color: #B9D6F2;
+        /* width: 80%; */
+        margin: auto;
+        margin-top: -20px;
+        /* max-width: 1000px; */
+        height: calc(100vh - 81px);
 }
